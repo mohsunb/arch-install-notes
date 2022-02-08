@@ -70,7 +70,7 @@ hwclock --systohc
 
 ## Select the input language by editing ```/etc/locale.gen``` and uncommenting:
 ```
-#en_US.UTF-8 UTF-8
+en_US.UTF-8 UTF-8
 ```
 
 ## Generate the locale file:
