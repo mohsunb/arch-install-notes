@@ -1,2 +1,203 @@
-# arch-install-guide
-A personalized tutorial on how to install Arch Linux.
+# A personalized tutorial on how to install Arch Linux.
+## Set the time to update automatically:
+```
+timedatectl set-ntp true
+```
+
+## Pick a drive and partition it (```/dev/sda``` in our case):
+To list all drives:
+```
+fdisk -l
+```
+Choose the drive:
+```
+fdisk /dev/sda
+```
+Use ```m``` for help.
+
+Create 550 MB EFI partition and 2 GB Swap partition.
+
+## Create the filesystems on the partitions just created:
+
+```
+mkfs.fat -F32 /dev/sda1
+```
+```
+mkswap /dev/sda2
+```
+```
+swapon /dev/sda2
+```
+```
+mkfs.ext4 /dev/sda3
+```
+
+## Mount the root partition:
+
+```
+mount /dev/sda3 /mnt
+```
+
+## Install necessary packages to root partition:
+
+```
+pacstrap /mnt base linux linux-firmware
+```
+
+## Generate the filesystem table file (fstab):
+
+```
+genfstab -U /mnt >> /mnt/etc/fstab
+```
+
+## Log in as root:
+
+```
+arch-chroot /mnt
+```
+
+## Select the local time zone:
+
+```
+ln -sf /usr/share/zoneinfo/Asia/Baku /etc/localtime
+```
+
+## Synchronize system and hardware (BIOS) clock (not in a vm):
+
+```
+hwclock --systohc
+```
+
+## Select the input language by editing ```/etc/locale.gen``` and uncommenting:
+```
+#en_US.UTF-8 UTF-8
+```
+
+## Generate the locale file:
+
+```
+locale-gen
+```
+
+## Create ```/etc/hostname``` file:
+
+*Replace ```grindle-arch``` and ```grindle``` with your desired host and username*
+
+* Enter: ```grindle-arch```
+* Save and exit
+
+## Edit ```/etc/hosts``` file:
+
+* Append:
+```
+127.0.0.1    localhost
+::1          localhost
+127.0.1.1    grindle-arch.localdomain    grindle-arch
+```
+* Save and exit
+
+## Create a root password:
+
+```
+passwd
+```
+
+## Create a user:
+
+```
+useradd -m grindle
+```
+
+## Create a password the user:
+
+```
+passwd grindle
+```
+
+## Add the user to all the required groups:
+
+```
+usermod -aG wheel,audio,video,optical,storage grindle
+```
+
+## Install ```sudo``` package to grant root access when prompted:
+
+```
+pacman -S sudo
+```
+
+## Edit the configuration file for ```sudo```:
+
+```
+visudo
+```
+* Uncomment the first ```%wheel``` line
+
+* Save and exit
+
+## Install ```grub``` package and dependencies
+
+```
+pacman -S grub efibootmgr dosfstools os-prober mtools
+```
+
+## Create and mount the EFI directory:
+
+```
+mkdir /boot/EFI
+```
+```
+mount /dev/sda1 /boot/EFI
+```
+
+## Install the GRUB bootloader:
+
+```
+grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
+```
+```
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+## Install the optional packages:
+
+```
+pacman -S archlinux-keyring git vim networkmanager wget
+```
+
+## Enable the Network Manager:
+
+```
+systemctl enable NetworkManager
+```
+
+## Exit root:
+
+```
+exit
+```
+
+## Unmount the root directory:
+
+```
+umount -l /mnt
+```
+
+## Reboot the system (shutdown and detach setup iso if in a vm):
+
+```
+reboot now
+```
+
+## Install the desktop environment (GNOME in our case):
+
+```
+sudo pacman -S gnome gdm
+```
+Select all default values
+```
+sudo systemctl enable gdm
+```
+```
+sudo reboot now
+```
