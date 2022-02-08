@@ -192,7 +192,7 @@ reboot now
 ## Install the desktop environment (GNOME in our case):
 
 ```
-sudo pacman -S gnome gdm
+sudo pacman -S gnome gnome-tweaks gdm
 ```
 Select all default values
 ```
