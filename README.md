@@ -1,4 +1,5 @@
 # A personalized tutorial on how to install Arch Linux.
+
 ## Set the time to update automatically:
 ```
 timedatectl set-ntp true
@@ -80,8 +81,6 @@ locale-gen
 ```
 
 ## Create ```/etc/hostname``` file:
-
-*Replace ```grindle-arch``` and ```grindle``` with your desired host and username*
 
 * Enter: ```grindle-arch```
 * Save and exit
@@ -189,7 +188,7 @@ umount -l /mnt
 reboot now
 ```
 
-## Install the desktop environment (GNOME in our case):
+## Install the desktop environment:
 
 ```
 sudo pacman -S gnome gnome-tweaks gdm
