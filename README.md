@@ -1,4 +1,6 @@
-# A personalized tutorial on how to install Arch Linux.
+# My notes on how to install Arch Linux.
+
+**Note: This is not a tutorial to be followed by others.**
 
 ## Set the time to update automatically:
 ```
