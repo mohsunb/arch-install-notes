@@ -26,16 +26,18 @@ Legacy: Create only a 2GB Swap partition.
 
 
 ## Create the filesystems on the partitions just created:
-
+EFI:
 ```
 mkfs.fat -F32 /dev/sda1
 ```
+Swap:
 ```
 mkswap /dev/sda2
 ```
 ```
 swapon /dev/sda2
 ```
+Root:
 ```
 mkfs.ext4 /dev/sda3
 ```
