@@ -21,6 +21,7 @@ Use ```m``` for help.
 **Create ```GPT table for UEFI``` and ```DOS table for BIOS/legacy``` installations.**
 
 UEFI: Create 550 MB EFI partition and 2 GB Swap partition.
+
 Legacy: Create only a 2GB Swap partition.
 
 
