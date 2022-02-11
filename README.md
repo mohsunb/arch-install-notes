@@ -51,7 +51,7 @@ mount /dev/sda3 /mnt
 ## Install necessary packages to root partition:
 
 ```
-pacstrap /mnt base linux linux-firmware
+pacstrap /mnt base linux linux-firmware vim
 ```
 
 ## Generate the filesystem table file (fstab):
