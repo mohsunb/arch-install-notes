@@ -175,7 +175,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ## Install the optional packages:
 
 ```
-pacman -S archlinux-keyring git vim networkmanager wget
+pacman -S archlinux-keyring git networkmanager wget
 ```
 
 ## Enable the Network Manager:
