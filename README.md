@@ -18,7 +18,7 @@ fdisk /dev/sda
 ```
 Use ```m``` for help.
 
-**Create ```GPT table for UEFI``` and ```DOS table for BIOS/legacy``` installations.**
+Create ```GPT``` table for **UEFI** and ```DOS``` table for **BIOS/Legacy** installations.
 
 UEFI: Create 550 MB EFI partition and 2 GB Swap partition.
 
@@ -147,7 +147,7 @@ visudo
 pacman -S grub efibootmgr dosfstools os-prober mtools
 ```
 
-## Create and mount the EFI directory:
+## In case of UEFI installs - Create and mount the EFI directory:
 
 ```
 mkdir /boot/EFI
