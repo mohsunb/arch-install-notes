@@ -7,7 +7,7 @@
 timedatectl set-ntp true
 ```
 
-## Pick a drive and partition it (```/dev/sda``` in our case):
+## Pick a drive and partition it (```/dev/sda``` usually):
 To list all drives:
 ```
 fdisk -l
@@ -18,7 +18,11 @@ fdisk /dev/sda
 ```
 Use ```m``` for help.
 
-Create 550 MB EFI partition and 2 GB Swap partition.
+**Create ```GPT table for UEFI``` and ```DOS table for BIOS/legacy``` installations.**
+
+UEFI: Create 550 MB EFI partition and 2 GB Swap partition.
+Legacy: Create only a 2GB Swap partition.
+
 
 ## Create the filesystems on the partitions just created:
 
@@ -152,10 +156,15 @@ mount /dev/sda1 /boot/EFI
 ```
 
 ## Install the GRUB bootloader:
-
+**UEFI**:
 ```
 grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 ```
+**BIOS/Legacy**:
+```
+grub-install --target=i386-pc /dev/sda
+```
+Create configuration file:
 ```
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
