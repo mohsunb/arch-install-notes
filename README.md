@@ -2,6 +2,25 @@
 
 **NB: This is not a tutorial to be followed by others.**
 
+## Enable Wi-Fi if necessary:
+```
+iwctl
+```
+Use ```device list``` to find the name of the wireless adapter.
+
+To scan for networks:
+```
+station DEVICE_NAME scan
+```
+To list their SSIDs:
+```
+station DEVICE_NAME get-networks
+```
+To connect to the desired network:
+```
+station DEVICE_NAME connect NETWORK_SSID
+```
+
 ## Set the time to update automatically:
 ```
 timedatectl set-ntp true
