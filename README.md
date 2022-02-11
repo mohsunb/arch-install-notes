@@ -116,7 +116,7 @@ passwd
 useradd -m grindle
 ```
 
-## Create a password the user:
+## Create a password for the user:
 
 ```
 passwd grindle
