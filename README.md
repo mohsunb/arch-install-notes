@@ -191,7 +191,7 @@ Create configuration file:
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-## Install the optional packages:
+## Install the remaining packages:
 
 ```
 pacman -S archlinux-keyring git networkmanager wget gnome gnome-tweaks gdm
