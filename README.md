@@ -194,13 +194,13 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ## Install the optional packages:
 
 ```
-pacman -S archlinux-keyring git networkmanager wget
+pacman -S archlinux-keyring git networkmanager wget gnome gnome-tweaks gdm
 ```
-
-## Enable the Network Manager:
-
 ```
 systemctl enable NetworkManager
+```
+```
+systemctl enable gdm
 ```
 
 ## Exit root:
@@ -219,17 +219,4 @@ umount -l /mnt
 
 ```
 reboot now
-```
-
-## Install the desktop environment:
-
-```
-sudo pacman -S gnome gnome-tweaks gdm
-```
-Select all default values
-```
-sudo systemctl enable gdm
-```
-```
-sudo reboot now
 ```
