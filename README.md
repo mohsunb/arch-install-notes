@@ -108,6 +108,11 @@ en_US.UTF-8 UTF-8
 locale-gen
 ```
 
+## Create ```/etc/locale.conf``` and enter:
+```
+en_US.UTF-8
+```
+
 ## Create ```/etc/hostname``` file:
 
 * Enter: ```grindle-arch```
