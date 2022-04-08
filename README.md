@@ -1,7 +1,5 @@
 # My personal notes on how to install Arch Linux.
 
-**NB: This is not a tutorial to be followed by others.**
-
 ## Enable Wi-Fi if necessary:
 ```
 iwctl
@@ -26,14 +24,14 @@ station DEVICE_NAME connect NETWORK_SSID
 timedatectl set-ntp true
 ```
 
-## Pick a drive and partition it (```/dev/sda``` usually):
+## Pick a drive and partition it:
 To list all drives:
 ```
 fdisk -l
 ```
 Choose the drive:
 ```
-fdisk /dev/sda
+fdisk /dev/*
 ```
 Use ```m``` for help.
 
@@ -47,24 +45,24 @@ Legacy: Create only a 2GB Swap partition.
 ## Create the filesystems on the partitions just created:
 EFI:
 ```
-mkfs.fat -F32 /dev/sda1
+mkfs.fat -F32 /dev/*1
 ```
 Swap:
 ```
-mkswap /dev/sda2
+mkswap /dev/*2
 ```
 ```
-swapon /dev/sda2
+swapon /dev/*2
 ```
 Root:
 ```
-mkfs.ext4 /dev/sda3
+mkfs.ext4 /dev/*3
 ```
 
 ## Mount the root partition:
 
 ```
-mount /dev/sda3 /mnt
+mount /dev/*3 /mnt
 ```
 
 ## Install necessary packages to root partition:
@@ -110,12 +108,12 @@ locale-gen
 
 ## Create ```/etc/locale.conf``` and enter:
 ```
-en_US.UTF-8
+LANG=en_US.UTF-8
 ```
 
 ## Create ```/etc/hostname``` file:
 
-* Enter: ```grindle-arch```
+* Enter: ```ROOT_NAME```
 * Save and exit
 
 ## Edit ```/etc/hosts``` file:
@@ -124,7 +122,7 @@ en_US.UTF-8
 ```
 127.0.0.1    localhost
 ::1          localhost
-127.0.1.1    grindle-arch.localdomain    grindle-arch
+127.0.1.1    ROOT_NAME.localdomain    ROOT_NAME
 ```
 * Save and exit
 
@@ -137,19 +135,19 @@ passwd
 ## Create a user:
 
 ```
-useradd -m grindle
+useradd -m USER_NAME
 ```
 
 ## Create a password for the user:
 
 ```
-passwd grindle
+passwd USER_NAME
 ```
 
 ## Add the user to all the required groups:
 
 ```
-usermod -aG wheel,audio,video,optical,storage grindle
+usermod -aG wheel,audio,video,optical,storage USER_NAME
 ```
 
 ## Install ```sudo``` package to grant root access when prompted:
@@ -179,33 +177,46 @@ pacman -S grub efibootmgr dosfstools os-prober mtools
 mkdir /boot/EFI
 ```
 ```
-mount /dev/sda1 /boot/EFI
+mount /dev/*1 /boot/EFI
 ```
 
 ## Install the GRUB bootloader:
 **UEFI**:
 ```
-grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
+grub-install --target=x86_64-efi --bootloader-id=BOOTLOADER_NAME --recheck
 ```
 **BIOS/Legacy**:
 ```
-grub-install --target=i386-pc /dev/sda
+grub-install --target=i386-pc /dev/*
 ```
 Create configuration file:
 ```
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-## Install the remaining packages:
+## Install some additional packages:
 
 ```
-pacman -S archlinux-keyring git networkmanager wget gnome gnome-tweaks gdm
+pacman -S archlinux-keyring git networkmanager wget
 ```
 ```
 systemctl enable NetworkManager
 ```
+
+## Install desktop environment:
+* Gnome Shell:
+```
+pacman -S gnome gnome-extra gnome-tweaks gdm
+```
 ```
 systemctl enable gdm
+```
+* KDE Plasma:
+```
+pacman -S xorg plasma kde-applications
+```
+```
+systemctl enable sddm
 ```
 
 ## Exit root:
