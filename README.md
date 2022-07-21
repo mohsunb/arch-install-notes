@@ -1,5 +1,25 @@
 # My personal notes on how to install Arch Linux.
 
+## Table of contents:
+* [Wi-Fi (Optional)](#enable-wi-fi-if-necessary)
+* [Enable NTP](#set-the-time-to-update-automatically)
+* [Partitioning](#pick-a-drive-and-partition-it)
+* [Filesystems](#create-the-filesystems-on-the-partitions-just-created)
+* [Installing Kernel](#install-necessary-packages-to-root-partition)
+* [Filesystem table](#generate-the-filesystem-table-file-fstab)
+* [Chroot](#log-in-as-root)
+* [Timezone](#select-the-local-time-zone)
+* [BIOS clock](#synchronize-system-and-hardware-bios-clock-not-in-a-vm)
+* [Input language](#select-the-input-language-by-editing-etclocalegen-and-uncommenting)
+* [Hostname](#create-etchostname-file)
+* [Hosts](#edit-etchosts-file)
+* [User](#configuring-root-and-user-accounts)
+* [sudo](#install-sudo-package-to-grant-root-access-when-prompted)
+* [Bootloader](#bootloader)
+* [Extras](#install-some-additional-packages)
+* [Desktop environment](#install-desktop-environment)
+* [Finalizing](#exit-root)
+
 ## Enable Wi-Fi if necessary:
 ```
 iwctl
@@ -59,14 +79,11 @@ Root:
 mkfs.ext4 /dev/*3
 ```
 
-## Mount the root partition:
+## Install necessary packages to root partition:
 
 ```
 mount /dev/*3 /mnt
 ```
-
-## Install necessary packages to root partition:
-
 ```
 pacstrap /mnt base linux linux-firmware vim
 ```
@@ -99,14 +116,10 @@ hwclock --systohc
 ```
 en_US.UTF-8 UTF-8
 ```
-
-## Generate the locale file:
-
 ```
 locale-gen
 ```
-
-## Create ```/etc/locale.conf``` and enter:
+Create ```/etc/locale.conf``` and enter:
 ```
 LANG=en_US.UTF-8
 ```
@@ -126,38 +139,32 @@ LANG=en_US.UTF-8
 ```
 * Save and exit
 
-## Create a root password:
+## Configuring ```root``` and user accounts:
+Create a root password:
 
 ```
 passwd
 ```
-
-## Create a user:
+Create a user:
 
 ```
 useradd -m USER_NAME
 ```
-
-## Create a password for the user:
+Create a password for the user:
 
 ```
 passwd USER_NAME
 ```
-
-## Add the user to all the required groups:
-
+Add the user to all the required groups:
 ```
 usermod -aG wheel,audio,video,optical,storage USER_NAME
 ```
 
 ## Install ```sudo``` package to grant root access when prompted:
-
 ```
 pacman -S sudo
 ```
-
-## Edit the configuration file for ```sudo```:
-
+Edit the configuration file for ```sudo```:
 ```
 visudo
 ```
@@ -165,22 +172,20 @@ visudo
 
 * Save and exit
 
-## Install ```grub``` package and dependencies
-
+## Bootloader
+Install ```grub``` package and dependencies:
 ```
 pacman -S grub efibootmgr dosfstools os-prober mtools
 ```
-
-## In case of UEFI installs - Create and mount the EFI directory:
-
+In case of UEFI installs - Create and mount the EFI directory:
 ```
 mkdir /boot/EFI
 ```
 ```
 mount /dev/*1 /boot/EFI
 ```
+Install the GRUB bootloader:
 
-## Install the GRUB bootloader:
 **UEFI**:
 ```
 grub-install --target=x86_64-efi --bootloader-id=BOOTLOADER_NAME --recheck
@@ -206,14 +211,14 @@ systemctl enable NetworkManager
 ## Install desktop environment:
 * Gnome Shell:
 ```
-pacman -S gnome gnome-extra gnome-tweaks gdm
+pacman -S gnome (optional: gnome-extra, gnome-tweaks)
 ```
 ```
 systemctl enable gdm
 ```
 * KDE Plasma:
 ```
-pacman -S xorg plasma kde-applications
+pacman -S plasma (optional: kde-applications)
 ```
 ```
 systemctl enable sddm
